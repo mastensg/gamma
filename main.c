@@ -105,24 +105,23 @@ screen_init() {
 static void
 handle_events(void) {
     SDL_Event event;
+    SDL_WaitEvent(&event);
 
-    while (SDL_PollEvent(&event)) {
-        switch (event.type) {
-        case SDL_KEYDOWN:
-            if(event.key.keysym.sym == SDLK_ESCAPE)
-                exit(EXIT_SUCCESS);
-            break;
-
-        case SDL_VIDEORESIZE:
-            sw = event.resize.w;
-            sh = event.resize.h;
-            screen = SDL_SetVideoMode(sw, sh, 0, SDL_RESIZABLE);
-            break;
-
-        case SDL_QUIT:
+    switch(event.type) {
+    case SDL_KEYDOWN:
+        if(event.key.keysym.sym == SDLK_ESCAPE)
             exit(EXIT_SUCCESS);
-            break;
-        }
+        break;
+
+    case SDL_VIDEORESIZE:
+        sw = event.resize.w;
+        sh = event.resize.h;
+        screen = SDL_SetVideoMode(sw, sh, 0, SDL_RESIZABLE);
+        break;
+
+    case SDL_QUIT:
+        exit(EXIT_SUCCESS);
+        break;
     }
 }
 
