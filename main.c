@@ -129,6 +129,7 @@ static void
 update_image(char *path) {
     pthread_mutex_lock(&mutex_update_image);
     image = IMG_Load(path);
+    draw();
     pthread_mutex_unlock(&mutex_update_image);
 }
 
@@ -179,9 +180,9 @@ main(int argc, char **argv) {
     if(pthread_create(&inotify_thread, &attr, monitor_file, argv[1]))
         err(EXIT_FAILURE, "pthread_create");
 
-    update_image(argv[1]);
     font_init();
     screen_init();
+    update_image(argv[1]);
 
     for(;;) {
         handle_events();
