@@ -129,6 +129,9 @@ static void
 update_image(char *path) {
     pthread_mutex_lock(&mutex_update_image);
 
+    if(image)
+        SDL_FreeSurface(image);
+
     image = IMG_Load(path);
 
     if(!image)
