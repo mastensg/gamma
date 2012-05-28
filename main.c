@@ -128,8 +128,14 @@ handle_events(void) {
 static void
 update_image(char *path) {
     pthread_mutex_lock(&mutex_update_image);
+
     image = IMG_Load(path);
+
+    if(!image)
+        errx(EXIT_FAILURE, "IMG_Load: %s", IMG_GetError());
+
     draw();
+
     pthread_mutex_unlock(&mutex_update_image);
 }
 
